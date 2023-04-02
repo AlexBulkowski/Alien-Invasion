@@ -4,3 +4,4 @@ class Settings:
         self.screen_height = 800
         self.bg_color = (0, 0, 0)
         self.ship_speed = 1
+        self.turbo_speed = 2 #The value that will multiplies the ship speed
