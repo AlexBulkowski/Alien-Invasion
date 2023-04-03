@@ -17,23 +17,44 @@ class Ship:
 
 
         #start each new ship at the bottom center of the screen
-        self.rect.midbottom = self.screen_rect.midbottom
+        self.rect.center = self.screen_rect.center
 
         #Value for horizontal position
         self.x = float(self.rect.x)
+        self.y = float(self.rect.y)
 
         #Movement
         self.moving_right = False
         self.moving_left = False
+        self.moving_top = False
+        self.moving_bottom = False
         self.turbo = False
 
 
     def update(self):
+
+        #limit for top movement
+        if self.moving_top and self.rect.top > 0:
+            if self.turbo:
+                self.y -= self.settings.ship_speed * self.settings.turbo_speed
+            else:
+                self.y -= self.settings.ship_speed
+
+        #limit for bottom movement
+        if self.moving_bottom and self.rect.bottom < self.screen_rect.bottom :
+            if self.turbo:
+                self.y += self.settings.ship_speed * self.settings.turbo_speed
+            else:
+                self.y += self.settings.ship_speed
+
+        #limit for right movement
         if self.moving_right and self.rect.right < self.screen_rect.right:
             if self.turbo:
                 self.x += self.settings.ship_speed * self.settings.turbo_speed
             else:
                 self.x += self.settings.ship_speed
+
+        #limit for left movement
         if self.moving_left and self.rect.left > 0:
             if self.turbo:
                 self.x -= self.settings.ship_speed * self.settings.turbo_speed
@@ -41,6 +62,7 @@ class Ship:
                 self.x -= self.settings.ship_speed
 
         self.rect.x = self.x #Updateing rect object
+        self.rect.y = self.y
 
 
     def blitme(self):
